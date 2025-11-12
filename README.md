@@ -17,16 +17,16 @@ Optimized CUDA kernel combining numerically stable softmax with inverted dropout
 
 ---
 
-## 🚀 Features
+## Features
 
-- ⚡ **Fused Operation**: Single CUDA kernel combining softmax and dropout for reduced memory bandwidth and improved performance
-- 🔢 **Numerically Stable**: Row-wise softmax with max subtraction to prevent overflow/underflow
-- 🎭 **Masking Support**: Optional attention mask with efficient `-inf` handling for masked positions
-- 🎲 **PyTorch-Compatible RNG**: Uses Philox random number generator compatible with PyTorch's RNG state
-- 🔄 **Inverted Dropout**: Standard inverted dropout implementation matching PyTorch's behavior
-- 📊 **Comprehensive Testing**: Full test suite with correctness checks and benchmarks
+- **Fused Operation**: Single CUDA kernel combining softmax and dropout for reduced memory bandwidth and improved performance
+- **Numerically Stable**: Row-wise softmax with max subtraction to prevent overflow/underflow
+- **Masking Support**: Optional attention mask with efficient `-inf` handling for masked positions
+- **PyTorch-Compatible RNG**: Uses Philox random number generator compatible with PyTorch's RNG state
+- **Inverted Dropout**: Standard inverted dropout implementation matching PyTorch's behavior
+- **Comprehensive Testing**: Full test suite with correctness checks and benchmarks
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Installation](#installation)
 - [Quick Start](#quick-start)
@@ -39,7 +39,7 @@ Optimized CUDA kernel combining numerically stable softmax with inverted dropout
 - [Contributing](#contributing)
 - [License](#license)
 
-## 🔧 Installation
+## Installation
 
 ### Prerequisites
 
@@ -76,10 +76,10 @@ assert torch.cuda.is_available(), "CUDA not available"
 # Test import
 x = torch.randn(2, 4, 8, device="cuda", dtype=torch.float32)
 y = fused_softmax_dropout.fused_softmax_dropout(x)
-print("✓ Installation successful!")
+print("Installation successful!")
 ```
 
-## 🎯 Quick Start
+## Quick Start
 
 ```python
 import torch
@@ -97,7 +97,7 @@ y = fused_softmax_dropout.fused_softmax_dropout(
 )
 ```
 
-## 💡 Usage Examples
+## Usage Examples
 
 ### Basic Usage
 
@@ -169,7 +169,7 @@ class AttentionLayer(nn.Module):
         return output
 ```
 
-## 📚 API Reference
+## API Reference
 
 ### `fused_softmax_dropout(x, mask=None, p=0.1, training=True)`
 
@@ -190,17 +190,17 @@ Fused softmax + dropout operation for CUDA tensors.
 
 #### Notes
 
-- ⚠️ Currently only supports `float32` tensors
-- ⚠️ Input must be on CUDA device
-- ✅ Masked positions in output are exactly `0.0`
-- ✅ Unmasked rows sum to `~1.0` (exactly `1.0` when `training=False`)
+- Currently only supports `float32` tensors
+- Input must be on CUDA device
+- Masked positions in output are exactly `0.0`
+- Unmasked rows sum to `~1.0` (exactly `1.0` when `training=False`)
 
 #### Raises
 
 - `ValueError`: If input is not on CUDA or not `float32`
 - `RuntimeError`: If CUDA operations fail
 
-## ⚡ Performance
+## Performance
 
 ### Benchmark Results
 
@@ -222,7 +222,7 @@ Fused operations reduce:
 - **Kernel launch overhead**: One kernel instead of two
 - **Intermediate storage**: No need to store softmax output before dropout
 
-## 🔬 Implementation Details
+## Implementation Details
 
 ### Kernel Design
 
@@ -249,7 +249,7 @@ Masked positions are set to `-inf` before the max computation, ensuring they con
 - **Shared memory**: Used for broadcasting reduction results within blocks
 - **Register usage**: Optimized to minimize register pressure
 
-## 🧪 Testing
+## Testing
 
 ### Run Tests
 
@@ -266,16 +266,16 @@ pytest tests/test_correctness.py::TestFusedSoftmaxDropout::test_no_mask_training
 
 ### Test Coverage
 
-- ✅ Correctness checks vs PyTorch baseline
-- ✅ Mask handling (various mask patterns)
-- ✅ Multiple input shapes and sizes
-- ✅ Edge cases (p=0, training=False, empty masks)
-- ✅ Numerical stability verification
-- ✅ RNG reproducibility
+- Correctness checks vs PyTorch baseline
+- Mask handling (various mask patterns)
+- Multiple input shapes and sizes
+- Edge cases (p=0, training=False, empty masks)
+- Numerical stability verification
+- RNG reproducibility
 
-## 🛣️ Roadmap
+## Roadmap
 
-### Current Status: ✅ v0.1.0 - Initial Release
+### Current Status: v0.1.0 - Initial Release
 
 - [x] Basic fused softmax + dropout kernel
 - [x] Masking support
@@ -318,7 +318,7 @@ pytest tests/test_correctness.py::TestFusedSoftmaxDropout::test_no_mask_training
   - [ ] Multi-CUDA version testing
   - [ ] Pre-built wheels for common configurations
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
@@ -352,30 +352,30 @@ pip install pytest pytest-cov black flake8
 - Add docstrings to all public functions
 - Include tests for new features
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - PyTorch team for the excellent C++ extension API
 - NVIDIA for CUDA toolkit and documentation
 - The open-source community for inspiration and feedback
 
-## 📞 Support
+## Support
 
 - **Issues**: [GitHub Issues](https://github.com/richafltr/fused-softmax-dropout-CUDA/issues)
 - **Discussions**: [GitHub Discussions](https://github.com/richafltr/fused-softmax-dropout-CUDA/discussions)
 
-## ⭐ Star History
+## Star History
 
-If you find this project useful, please consider giving it a star! ⭐
+If you find this project useful, please consider giving it a star!
 
 ---
 
 <div align="center">
 
-**Made with ❤️ for the PyTorch community**
+**Made with care for the PyTorch community**
 
 [Report Bug](https://github.com/richafltr/fused-softmax-dropout-CUDA/issues) • [Request Feature](https://github.com/richafltr/fused-softmax-dropout-CUDA/issues) • [Documentation](#api-reference)
 
