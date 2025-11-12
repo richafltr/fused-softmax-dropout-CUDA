@@ -2,6 +2,7 @@
 #include <ATen/cuda/CUDAContext.h>
 #include <ATen/CUDAGeneratorImpl.h>
 #include <c10/cuda/CUDAGuard.h>
+#include <c10/cuda/CUDAException.h>
 
 // Forward declaration
 void launch_fused_softmax_dropout(
@@ -48,6 +49,10 @@ torch::Tensor fused_softmax_dropout_forward(
     
     // Launch kernel
     at::Tensor mask_for_kernel = mask_contig.defined() ? mask_contig : at::Tensor();
+    
+    // Check for CUDA errors before launch
+    AT_CUDA_CHECK(cudaGetLastError());
+    
     launch_fused_softmax_dropout(
         x,
         mask_for_kernel,
@@ -56,6 +61,10 @@ torch::Tensor fused_softmax_dropout_forward(
         training,
         philox_state
     );
+    
+    // Check for CUDA errors after launch
+    AT_CUDA_CHECK(cudaDeviceSynchronize());
+    AT_CUDA_CHECK(cudaGetLastError());
     
     return y;
 }
